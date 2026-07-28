@@ -1,0 +1,123 @@
+{
+  "common": {
+    "errorMessage": "Something went wrong. Please try again."
+  },
+  "authLayout": {
+    "premiumRacing": "Premium Racing",
+    "hero": {
+      "titleSignup": "You've Been Invited",
+      "titlePrefixSignup": "Personally",
+      "subTitleSignup": "Exclusive access has been extended to you to join an elite stable on FastTrack.",
+      "titlePrefix": "The",
+      "titleHighlight": "Premier",
+      "titleHighlightSignup": "Personally",
+      "titleSuffix": "platform for trainers, owners, and syndicates.",
+      "titleSuffixSignup": "Invited",
+      "subtitle": "Log in to manage your FastTrack dashboard to oversee horses, training, and race entries",
+      "subtitleSignup": "Exclusive access has been extended to you to join an elite stable on FastTrack."
+    },
+    "stats": {
+      "trainers": {
+        "value": "500+",
+        "label": "Trainers"
+      },
+      "horses": {
+        "value": "12K+",
+        "label": "Horses"
+      },
+      "satisfaction": {
+        "value": "98%",
+        "label": "Satisfaction"
+      }
+    }
+  },
+  "login": {
+    "title": "Sign in",
+    "signUpLink": "Create an account",
+    "signInButton": "Sign In",
+    "passwordLabel": "Password",
+    "emailLabel": "Email Address",
+    "forgotPassword": "Forgot Password?",
+    "emailPlaceholder": "Enter your email",
+    "noAccountText": "New to Fast Track?",
+    "passwordPlaceholder": "**********",
+    "keepMeSignedIn": "Keep me logged in",
+    "subtitle": "Please login to continue to your account."
+  },
+  "signup": {
+    "emailLabel": "Email",
+    "roleLabel": "Role",
+    "signInLink": "Sign In",
+    "signUpButton": "Next",
+    "passwordLabel": "Password",
+    "fullNameLabel": "Full Name",
+    "companyNameLabel": "Company Name",
+    "title": "Create your Account!",
+    "emailPlaceholder": "Enter Email",
+    "rolePlaceholder": "Select Role",
+    "trainerRole": "Trainer",
+    "ownerRole": "Owner",
+    "syndicateMemberRole": "Syndicate Member",
+    "syndicateManagerRole": "Syndicate Manager",
+    "confirmPasswordLabel": "Confirm Password",
+    "hasAccountText": "Already have an account?",
+    "passwordPlaceholder": "Enter Password",
+    "fullNamePlaceholder": "John Doe",
+    "companyNamePlaceholder": "XYZ Corp",
+    "confirmPasswordPlaceholder": "Re-enter Password",
+    "subtitle": "Start your 14-day free trial — no credit card required",
+    "termsText": "Owners & Syndicate Members join via invite link only"
+  },
+  "signupOtpSuccess": {
+    "title": "Account Created!",
+    "subtitle": "Your email has been successfully verified and your account has been created successfully.",
+    "loginButton": "Login Now!"
+  },
+  "forgotPassword": {
+    "resetPassword": {
+      "buttonLabel": "Send Code",
+      "title": "Forgot Your Password?",
+      "emailLabel": "Email Address",
+      "backToSignIn": "Back to Sign In",
+      "emailPlaceholder": "Enter your email",
+      "subtitle": "Enter the email address associated with your account and we'll send you a link to reset your password."
+    },
+    "otpVerification": {
+      "buttonLabel": "Verify",
+      "verifyButton": "Verify",
+      "otpErrorFallback": "Enter OTP",
+      "resending": "Resending...",
+      "resendOtp": "Resend OTP",
+      "title": "Verify Identity",
+      "didntGetEmail": "Didn't get the Email?",
+      "subtitle": "We've sent a code to {email} Enter the login code to create your account.",
+      "resetPasswordSubtitle": "We've sent a code to {email} Enter the code to reset your password."
+    },
+    "setNewPassword": {
+      "title": "Reset Password",
+      "buttonLabel": "Reset Password",
+      "newPasswordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "subtitle": "Please enter the new password."
+    },
+    "passwordChanged": {
+      "buttonLabel": "Login Now",
+      "title": "Password Changed!",
+      "subtitle": "Your password has been changed successfully."
+    }
+  },
+  "header": {
+    "welcomeTitle": "Welcome Back!",
+    "searchPlaceholder": "Search horses, races, owners...",
+    "defaultUserName": "User",
+    "defaultUserRole": "Member"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "navigation": "Navigation",
+    "settings": "Settings",
+    "logout": "Sign Out"
+  }
+}

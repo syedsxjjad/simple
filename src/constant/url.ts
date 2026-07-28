@@ -1,0 +1,43 @@
+import { USER_ROLES } from '@/enums/userRoles.enum';
+import { ROUTE_KEY } from '@/enums/routes.enum';
+
+export const ADMIN_ROUTES = {
+  DASHBOARD: `/admin/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const OWNER_ROUTES = {
+  DASHBOARD: `/owner/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const TRAINER_ROUTES = {
+  DASHBOARD: `/trainer/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const ASSISTANT_TRAINER_ROUTES = {
+  DASHBOARD: `/assistant-trainer/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const SYNDICATE_MANAGER_ROUTES = {
+  DASHBOARD: `/syndicate-manager/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const SYNDICATE_MEMBER_ROUTES = {
+  DASHBOARD: `/syndicate-member/${ROUTE_KEY.DASHBOARD}`,
+};
+
+export const PUBLIC_ROUTES = {
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  RESET_PASSWORD: '/reset-password',
+  FORGOT_PASSWORD: '/forgot-password',
+  OTP_VERIFICATION: '/otp-verification',
+};
+
+export const USERS_DEFAULT_ROUTES: Record<USER_ROLES, string> = {
+  [USER_ROLES.ADMIN]: ADMIN_ROUTES.DASHBOARD,
+  [USER_ROLES.OWNER]: OWNER_ROUTES.DASHBOARD,
+  [USER_ROLES.TRAINER]: TRAINER_ROUTES.DASHBOARD,
+  [USER_ROLES.ASSISTANT_TRAINER]: ASSISTANT_TRAINER_ROUTES.DASHBOARD,
+  [USER_ROLES.SYNDICATE_MANAGER]: SYNDICATE_MANAGER_ROUTES.DASHBOARD,
+  [USER_ROLES.SYNDICATE_MEMBER]: SYNDICATE_MEMBER_ROUTES.DASHBOARD,
+};

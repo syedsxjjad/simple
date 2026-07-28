@@ -1,0 +1,9 @@
+export const COMMON_ERROR_TITLE = 'Error!';
+export const COMMON_ERROR_DESCRIPTION = 'Something went wrong!';
+export const COMMON_SUCCESS_TITLE = 'Success';
+export const COMMON_NO_DATA_MESSAGE = 'No Records Found';
+export const COMMON_NO_COURSE_MESSAGE = 'No course found';
+export const COMMON_NO_PAYMENT_MESSAGE = 'No payment found';
+export const COMMON_NO_CERTIFICATE_MESSAGE = 'No certificate found';
+export const COMMON_MAX_UPLOAD_SIZE = 'Maximum upload size: 5 GB';
+export const COMMON_MAX_UPLOAD_SIZE_SMALL = 'Maximum upload size: 1 GB';
