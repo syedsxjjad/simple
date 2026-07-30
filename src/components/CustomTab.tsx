@@ -17,6 +17,7 @@ interface CustomTabsProps {
   tabsListClassName?: string;
   tabsTriggerClassName?: string;
   tabsContentClassName?: string;
+  headerEndContent?: React.ReactNode;
   onChange?: (value: string) => void;
   orientation?: 'horizontal' | 'vertical';
 }
@@ -29,35 +30,41 @@ const CustomTabs: React.FC<CustomTabsProps> = ({
   disabled = false,
   tabsListClassName,
   tabsTriggerClassName,
+  headerEndContent,
   tabsContentClassName,
   orientation = 'horizontal',
 }) => {
+  const tabsProps = value !== undefined
+    ? { value }
+    : { defaultValue: defaultValue || tabs[0]?.value };
+
   return (
     <Tabs
-      value={value || defaultValue}
-      onValueChange={value => {
+      {...tabsProps}
+      onValueChange={val => {
         if (!disabled) {
-          onChange?.(value);
+          onChange?.(val);
         }
       }}
       orientation={orientation}
       className={className}
     >
       {/* <TabsList className="sm:w-fit w-full h-12 overflow-x-auto scrollbar-hide"></TabsList> */}
-      <TabsList className={cn('w-fit h-12 overflow-x-auto scrollbar-hide', tabsListClassName)}>
+      <TabsList className={cn('w-fit h-12 max-w-full overflow-x-auto scrollbar-hide', tabsListClassName)}>
         <div className="flex min-w-full gap-2">
           {tabs.map(tab => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}
               disabled={disabled || tab.disabled}
-              className={cn('h-12 data-[state=active]:bg-primary data-[state=active]:text-white', tabsTriggerClassName)}
+              className={cn('h-12 shrink-0 data-[state=active]:bg-primary data-[state=active]:text-white', tabsTriggerClassName)}
             >
               {tab.label}
             </TabsTrigger>
           ))}
         </div>
       </TabsList>
+      {headerEndContent}
       {tabs.map(tab => (
         <TabsContent key={tab.value} value={tab.value} className={tabsContentClassName}>
           {tab.content}

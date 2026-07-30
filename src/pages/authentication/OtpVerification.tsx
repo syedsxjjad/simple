@@ -1,6 +1,6 @@
 import FormJson from '@/locales/en.json';
 import Button from '@/components/Form/Button';
-import AuthHeader from '@/components/AuthHeader';
+import SectionHeader from '@/components/SectionHeader';
 import { useOtpVerification } from '@/hooks/useOtpVerification';
 import { Typography } from '@/components/Form/Typography';
 import { useNavigate } from 'react-router-dom';
@@ -48,9 +48,9 @@ const OtpVerification = () => {
     <>
       <div className="space-y-6 w-full md:pt-4 h-full flex flex-col justify-between">
         <div>
-          <AuthHeader
+          <SectionHeader
             title={FormJson.forgotPassword.otpVerification.title}
-            subtitle={subTitle}
+            subtitleText={subTitle}
           />
           <form className="space-y-7 mt-12" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex justify-center sm:gap-4 gap-2">

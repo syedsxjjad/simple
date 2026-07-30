@@ -60,7 +60,7 @@ export default function SectionHeader({
             {titleBack}
           </Typography> : null
         }
-        <Typography className={cn('font-sora md:text-4xl! text-2xl font-normal! text-foreground-white break-all', titleClassName)}>
+        <Typography className={cn('font-sora md:text-4xl! text-2xl font-normal! text-foreground-black break-all', titleClassName)}>
           {title}
         </Typography>
         {subtitleText ? (
@@ -71,7 +71,7 @@ export default function SectionHeader({
       </div>
       {seeAllText && (
         <Button
-          className={cn('cursor-pointer text-foreground-white underline break-all text-base! font-normal', buttonClassName)}
+          className={cn('cursor-pointer text-foreground-black underline break-all text-base! font-normal', buttonClassName)}
           onClick={() => (onSeeAll ? onSeeAll() : navigate(-1))}
           leftIcon={leftIcon}
           disabled={disabled}

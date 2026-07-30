@@ -8,14 +8,14 @@ export default function UserDashboardLayout() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="h-screen bg-background sm:p-4 p-2.5 flex gap-4 overflow-hidden">
       <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
-      <Header isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
-      <main className="flex-1 transition-all duration-300 lg:ml-72 sm:pt-28 pt-24 min-h-screen overflow-x-hidden">
-        <div className="py-3 lg:pl-7 pl-3 lg:pr-5 pr-3">
+      <div className="flex-1 flex flex-col min-w-0 sm:gap-4 gap-2.5 overflow-hidden">
+        <Header isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
+        <main className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto">
           <Outlet />
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import FormJson from '@/locales/en.json';
 import Button from '@/components/Form/Button';
-import AuthHeader from '@/components/AuthHeader';
+import SectionHeader from '@/components/SectionHeader';
 import FormInput from '@/components/Form/FormInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -54,9 +54,9 @@ const ResetPassword = () => {
     <FormProvider {...methods}>
       <div className="flex flex-col justify-between h-full">
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
-          <AuthHeader
+          <SectionHeader
             title={FormJson.forgotPassword.setNewPassword.title}
-            subtitle={FormJson.forgotPassword.setNewPassword.subtitle}
+            subtitleText={FormJson.forgotPassword.setNewPassword.subtitle}
           />
           <div className="space-y-7 mt-12">
             <FormInput

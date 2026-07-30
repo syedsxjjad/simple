@@ -11,7 +11,7 @@ interface StepVerificationProps {
   children?: React.ReactNode;
 }
 
-export const StepVerification: React.FC<StepVerificationProps> = ({
+export const Stepper: React.FC<StepVerificationProps> = ({
   currentStep,
   steps,
   component,
@@ -47,8 +47,8 @@ export const StepVerification: React.FC<StepVerificationProps> = ({
                       isCompleted
                         ? 'bg-primary border-primary'
                         : isActive
-                        ? 'bg-white border-primary'
-                        : 'bg-white border-border-grey'
+                          ? 'bg-white border-primary'
+                          : 'bg-white border-border-grey'
                     )}
                   >
                     {isCompleted ? (

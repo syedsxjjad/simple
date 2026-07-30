@@ -5,7 +5,6 @@ import { useEffect, useRef, type ReactNode } from 'react';
 
 import { cn } from '@/utils/utils';
 import { Typography } from './Form/Typography';
-import FormJson from '@/locales/en.json';
 
 let openModalCount = 0;
 let originalBodyOverflow = '';

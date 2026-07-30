@@ -17,7 +17,6 @@ import {
   syndicateMemberNavItems,
   trainerNavItems,
 } from '@/constant/navItems';
-import AuthHeader from './AuthHeader';
 
 interface SidebarProps {
   isMobileOpen: boolean;
@@ -75,17 +74,17 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
         />
       )}
 
- <aside
+      <aside
         className={cn(
-          'fixed lg:left-4 lg:top-4 top-0 lg:h-[calc(100%-32px)] h-full sidebar-bg-gradient transition-all lg:rounded-2xl p-4 duration-300 border border-sidebar-border flex flex-col',
-          isMobileOpen ? 'translate-x-0 w-full lg:w-70 z-[70]' : '-translate-x-full lg:translate-x-0 z-30',
-          !isMobileOpen && 'lg:w-70'
+          'sidebar-bg-gradient transition-all lg:rounded-2xl p-2 duration-300 border border-sidebar-border flex flex-col',
+          'lg:sticky lg:top-4 lg:h-[calc(100vh-32px)] lg:w-70 lg:shrink-0 lg:z-auto',
+          'fixed inset-y-0 left-0 h-full z-[70]',
+          isMobileOpen ? 'translate-x-0 w-full! sm:w-70 ' : '-translate-x-full lg:translate-x-0'
         )}
       >
-        <div className={cn('flex items-center justify-between flex-shrink-0 -mx-4 px-3 pb-4 pt-1 border-b border-sidebar-border')}>
+        <div className={cn('flex items-center justify-between shrink-0 pb-4 pt-1 border-b border-sidebar-border')}>
           <div className='flex items-center gap-2'>
-            <AppLogo  className='h-14 w-[70px]'/>
-           <AuthHeader className='!space-y-0 flex !flex-col' title={'FastTrack'} titleClassName='allocation-percentage-slider-text-gradient !text-[23px] !font-semibold' subtitle={'Racing Management'} subtitleClassName='uppercase !text-xs !font-normal tracking-[0.15em] !text-placeholder'/>
+            <AppLogo className='h-14 w-[70px]' />
           </div>
 
           <button
@@ -97,11 +96,11 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
           </button>
         </div>
 
-          <Typography
-            className={cn('block px-2 mt-5 !font-normal !text-xs uppercase tracking-[0.2em] text-secondary-light mb-2')}
-          >
-            {en.sidebar.navigation}
-          </Typography>
+        <Typography
+          className={cn('block px-2 mt-5 !font-normal !text-xs uppercase tracking-[0.2em] text-secondary-light mb-2')}
+        >
+          {en.sidebar.navigation}
+        </Typography>
         <nav className={cn('mt-1 flex-1 overflow-y-auto min-h-0')}>
           <ul className={cn('space-y-1.5')}>
             {routes.map(item => {

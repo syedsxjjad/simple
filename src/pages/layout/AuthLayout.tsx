@@ -1,41 +1,20 @@
-import { Outlet } from 'react-router-dom';
-import AuthLayoutImage from '@/assets/images/authImage.svg';
-import ContainerImage from '@/assets/images/containerImage.png';
-import AppLogo from '@/assets/icons/AppLogo';
-import AuthHeroSection from '@/components/Auth/AuthHeroSection';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const AuthLayout = () => {
+
   return (
-    <div
-      className="min-h-screen flex justify-center bg-background py-3 lg:pl-3"
-      style={{
-        backgroundImage: `url(${AuthLayoutImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'bottom center',
-      }}
-    >
-      <div className="hidden md:w-1/2 lg:flex racing-gradient flex-col rounded-4xl justify-center items-center max-h-[120vh] border-0 gold-border-gradient">
-        <div className="w-full flex flex-col overflow-hidden items-center">
-          <div
-            className="flex w-full justify-center items-center"
-            style={{
-              width: '600px',
-              height: '440px',
-              backgroundImage: `url(${ContainerImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'top center',
-            }}
-          >
-            <AppLogo width={340} />
-          </div>
-          <div className="xl:w-3/4 lg:w-[80%] w-[95%] mx-auto mb-20">
-            <AuthHeroSection />
-          </div>
-        </div>
+    // <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="flex flex-col h-screen lg:flex-row w-full bg-foreground-white overflow-hidden">
+      {/* Left side - Branding */}
+      <div className="lg:w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 p-8 lg:p-16 lg:block hidden">
+        Background Pattern
       </div>
 
-      <div className="px-5 xl:px-20 lg:px-16 md:py-5 md:px-8 md:m-0 m-3 w-full md:max-w-lg lg:max-w-none lg:w-1/2 mx-auto lg:mx-0 max-h-[120vh] overflow-y-auto show-scrollbar flex flex-col justify-center">
-        <Outlet />
+      {/* Right side - Form */}
+      <div className="lg:w-1/2 flex flex-col overflow-y-auto h-full px-8 lg:px-16 py-6">
+        <div className="w-full my-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

@@ -46,6 +46,9 @@ const Button: React.FC<ButtonProps> = ({
     if (variant === 'outline') {
       return 'text-primary hover:text-foreground hover:bg-primary/10';
     }
+    if (variant === 'destructive') {
+      return 'text-destructive hover:text-destructive-foreground hover:bg-destructive/10';
+    }
     return '';
   };
 
@@ -57,16 +60,20 @@ const Button: React.FC<ButtonProps> = ({
       disabled={isDisabled}
       className={cn('cursor-pointer rounded-2xl', fullWidth && 'w-full', 'h-auto md:h-14', getVariantClasses(), className)}
     >
-      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-
-      {!loading && leftIcon && (
-        <span className={cn('mr-2 flex items-center [&>svg]:w-4 [&>svg]:h-4', leftIconClassName)}>{leftIcon}</span>
-      )}
-
-      {loading ? loadingText || buttonText : <span className={cn("break-all whitespace-normal sm:text-lg! text-sm!  sm:font-semibold font-normal", buttonTextClassName)}>{buttonText}</span>}
-
-      {!loading && rightIcon && (
-        <span className={cn('ml-2 flex items-center [&>svg]:w-4 [&>svg]:h-4', rightIconClassName)}>{rightIcon}</span>
+      {loading ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <>
+          {leftIcon && (
+            <span className={cn('mr-2 flex items-center [&>svg]:w-4 [&>svg]:h-4', leftIconClassName)}>{leftIcon}</span>
+          )}
+          <span className={cn('break-all whitespace-normal sm:text-lg! text-base! font-medium', buttonTextClassName)}>
+            {buttonText}
+          </span>
+          {rightIcon && (
+            <span className={cn('ml-2 flex items-center [&>svg]:w-4 [&>svg]:h-4', rightIconClassName)}>{rightIcon}</span>
+          )}
+        </>
       )}
     </ShadcnButton>
   );

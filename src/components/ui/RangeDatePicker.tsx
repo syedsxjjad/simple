@@ -28,10 +28,14 @@ function sanitizeRange(input?: DateRange): DateRange | undefined {
 }
 
 /** Matches {@link DatePickerInput} field chrome (label, row, icon, error row). */
-const baseWrapperClass =
-  "relative flex w-full items-center rounded-2xl px-4 border border-border bg-primary h-12 md:h-14 shrink-0 overflow-visible"
-const triggerTextClass =
+const darkTriggerClass =
+  "relative flex w-full items-center rounded-2xl px-4 border border-border bg-primary h-12 md:h-[50px] shrink-0 overflow-visible"
+const lightTriggerClass =
+  "relative flex w-full items-center rounded-xl px-4 border border-input-border bg-input-bg h-12 md:h-[50px] shrink-0 overflow-visible"
+const darkTriggerTextClass =
   "flex min-h-0 flex-1 items-center self-stretch pr-2 text-left text-base font-normal leading-[3rem] md:leading-[3.5rem] focus:outline-none focus-visible:ring-0 [color-scheme:dark]"
+const lightTriggerTextClass =
+  "flex min-h-0 flex-1 items-center self-stretch pr-2 text-left text-base font-normal leading-[3rem] md:leading-[3.5rem] focus:outline-none focus-visible:ring-0"
 
 type SharedRangeDatePickerProps = {
   placeholder?: string
@@ -49,6 +53,10 @@ type SharedRangeDatePickerProps = {
    * `error` to trigger border when set.
    */
   embedded?: boolean
+  /** `light` uses white trigger + brand tan calendar popover for admin forms. */
+  appearance?: "dark" | "light"
+  /** Whether to close the popover automatically after a selection is made. */
+  closeOnSelect?: boolean
 }
 
 export type RangeDatePickerRangeProps = SharedRangeDatePickerProps & {
@@ -72,6 +80,9 @@ export type RangeDatePickerProps =
 export function RangeDatePicker(props: RangeDatePickerProps) {
   const isSingle = props.selection === "single"
   const embedded = props.embedded ?? false
+  const appearance = props.appearance ?? "dark"
+  const isLightAppearance = appearance === "light"
+  const closeOnSelect = props.closeOnSelect ?? true
 
   const {
     className,
@@ -114,7 +125,7 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
     if (!isSingle) {
       const next = sanitizeRange(range)
       setRangeDate(next)
-      ;(props as RangeDatePickerRangeProps).onChange?.(range)
+        ; (props as RangeDatePickerRangeProps).onChange?.(range)
       // First range tap often sets `from` === `to`; only close once the span is two distinct days.
       if (
         next?.from &&
@@ -123,7 +134,7 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
         isValid(next.to) &&
         !isSameDay(next.from, next.to)
       ) {
-        setOpen(false)
+        if (closeOnSelect) setOpen(false)
       }
     }
   }
@@ -132,8 +143,8 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
     if (!isSingle || disabled) return
     setSingleDate(d)
     const iso = d ? formatLocalDateToIso(d) : ""
-    ;(props as RangeDatePickerSingleProps).onChange?.(iso)
-    setOpen(false)
+      ; (props as RangeDatePickerSingleProps).onChange?.(iso)
+    if (closeOnSelect) setOpen(false)
   }
 
   const from = rangeDate?.from
@@ -169,15 +180,15 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
 
   const singleDisabledMatchers = isSingle
     ? isoMinMaxDisabledMatchers(
-        (props as RangeDatePickerSingleProps).min,
-        (props as RangeDatePickerSingleProps).max,
-      )
+      (props as RangeDatePickerSingleProps).min,
+      (props as RangeDatePickerSingleProps).max,
+    )
     : undefined
 
   return (
     <div
       className={cn(
-        "flex flex-col gap-1.5 h-22 justify-start",
+        "flex flex-col gap-2 justify-start",
         embedded && "h-auto gap-0",
         className,
       )}
@@ -201,7 +212,7 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
             disabled={disabled}
             aria-label={ariaLabel}
             className={cn(
-              baseWrapperClass,
+              isLightAppearance ? lightTriggerClass : darkTriggerClass,
               error && "border-destructive",
               disabled && "opacity-60",
               triggerClassName,
@@ -209,14 +220,23 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
           >
             <span
               className={cn(
-                triggerTextClass,
-                hasDisplay ? "text-placeholder" : "text-placeholder/30",
+                isLightAppearance ? lightTriggerTextClass : darkTriggerTextClass,
+                hasDisplay
+                  ? isLightAppearance
+                    ? "text-sec-text"
+                    : "text-placeholder"
+                  : isLightAppearance
+                    ? "text-sec-text/50"
+                    : "text-placeholder/30",
               )}
             >
               {displayLabel ?? placeholder}
             </span>
             <Calendar
-              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 shrink-0 -translate-y-1/2 text-secondary-dark"
+              className={cn(
+                "pointer-events-none absolute right-4 top-1/2 h-4 w-4 shrink-0 -translate-y-1/2",
+                isLightAppearance ? "text-secondary-light" : "text-secondary-light",
+              )}
               aria-hidden
             />
           </button>
@@ -226,7 +246,10 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
           align="start"
           sideOffset={8}
           className={cn(
-            "z-[100] w-auto rounded-2xl border border-border bg-primary p-0 shadow-xl text-foreground-white",
+            "z-[100] w-auto rounded-[18px] border p-0 shadow-xl",
+            isLightAppearance
+              ? "border-input-border bg-foreground-white text-schedule-date-text"
+              : "border-border bg-primary text-foreground-white",
           )}
         >
           {isSingle ? (
@@ -234,6 +257,7 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
               mode="single"
               required={false}
               calendarAppearance="single"
+              calendarTheme={isLightAppearance ? "light" : "default"}
               selected={singleDate}
               onSelect={handleSingleSelect}
               defaultMonth={defaultMonthSingle}
@@ -244,6 +268,7 @@ export function RangeDatePicker(props: RangeDatePickerProps) {
             <CalendarGrid
               mode="range"
               calendarAppearance="range"
+              calendarTheme={isLightAppearance ? "light" : "default"}
               defaultMonth={defaultMonthRange}
               selected={rangeDate}
               onSelect={handleRangeSelect}

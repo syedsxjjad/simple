@@ -6,7 +6,7 @@ import FormInput from '@/components/Form/FormInput';
 import { PUBLIC_ROUTES } from '@/constant/url';
 import FormJson from '@/locales/en.json';
 import Button from '@/components/Form/Button';
-import AuthHeader from '@/components/AuthHeader';
+import SectionHeader from '@/components/SectionHeader';
 import { Typography } from '@/components/Form/Typography';
 import { ForgotPasswordFormData, forgotPasswordSchema } from '@/validator/auth-validator';
 
@@ -29,9 +29,9 @@ const ForgotPassword = () => {
     <FormProvider {...methods}>
       <div className="flex flex-col justify-between h-full md:pt-4">
         <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full">
-          <AuthHeader
+          <SectionHeader
             title={FormJson.forgotPassword.resetPassword.title}
-            subtitle={FormJson.forgotPassword.resetPassword.subtitle}
+            subtitleText={FormJson.forgotPassword.resetPassword.subtitle}
           />
           <div className="space-y-5 mt-12">
             <FormInput
@@ -48,6 +48,7 @@ const ForgotPassword = () => {
             fullWidth
             type="submit"
             className="mt-12"
+            size='lg'
             variant="default"
             loading={forgotPasswordMutation.isPending}
             label={FormJson.forgotPassword.resetPassword.buttonLabel}

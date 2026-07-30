@@ -20,7 +20,7 @@ export const ListErrorState: React.FC<ListErrorStateProps> = ({
   const card = (
     <Card
       className={cn(
-        'h-[40vh] flex items-center border-none shadow-none rounded-2xl justify-center',
+        'h-[40vh] flex items-center border border-input-border shadow-none rounded-2xl justify-center',
         className
       )}
     >
@@ -48,17 +48,18 @@ export const ListErrorState: React.FC<ListErrorStateProps> = ({
 interface ListEmptyStateProps {
   message: string;
   className?: string;
+  textClassName?: string;
 }
 
 /** Shown when a list has no data (e.g. no teachers assigned, no students). */
-export const ListEmptyState: React.FC<ListEmptyStateProps> = ({ message, className }) => (
+export const ListEmptyState: React.FC<ListEmptyStateProps> = ({ message, className, textClassName }) => (
   <Card
     className={cn(
       'min-h-[200px] flex items-center justify-center rounded-2xl',
       className
     )}
   >
-    <Typography className="!text-base text-placeholder text-center">
+    <Typography className={cn("!text-base text-placeholder text-center", textClassName)}>
       {message}
     </Typography>
   </Card>

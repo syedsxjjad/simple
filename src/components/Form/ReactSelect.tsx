@@ -7,12 +7,13 @@ import Select, {
   type DropdownIndicatorProps,
   type NoticeProps,
 } from 'react-select';
-import makeAnimated from 'react-select/animated';
 import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { cn } from '@/utils/utils';
 
 const DROPDOWN_MAX_HEIGHT_PX = 240;
 const VIEWPORT_EDGE_PADDING_PX = 8;
+/** Chip list scroll area — matches default `max-h-28`. */
+const CHIP_AREA_MAX_HEIGHT_PX = 88;
 
 interface ReactSelectProps {
   options: { value: string; label: string }[];
@@ -30,6 +31,8 @@ interface ReactSelectProps {
   isLoadingMore?: boolean;
   loadingMessage?: string;
   loadingMoreMessage?: string;
+  /** Cap chip area height for multi-select (e.g. max-h-28 overflow-y-auto show-scrollbar). */
+  valueContainerClassName?: string;
 }
 
 /** Custom fields on react-select `selectProps` (avoid built-in `loadingMessage` name). */
@@ -52,8 +55,17 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any, true>) => {
 
 const MultiValueRemove = (props: MultiValueRemoveProps<any, true>) => {
   return (
-    <components.MultiValueRemove {...props}>
-      <XIcon className="size-[14px] !text-destructive" strokeWidth={2.5} />
+    <components.MultiValueRemove
+      {...props}
+      innerProps={{
+        ...props.innerProps,
+        className: cn(
+          'flex cursor-pointer items-center justify-center rounded-full p-0.5 text-destructive hover:text-destructive/80',
+          props.innerProps?.className,
+        ),
+      }}
+    >
+      <XIcon className="size-[14px] shrink-0 pointer-events-none" strokeWidth={2.5} aria-hidden />
     </components.MultiValueRemove>
   );
 };
@@ -61,7 +73,7 @@ const MultiValueRemove = (props: MultiValueRemoveProps<any, true>) => {
 const ClearIndicator = (props: any) => {
   return (
     <components.ClearIndicator {...props}>
-      <XIcon className="size-4 text-destructive hover:text-destructive/80 cursor-pointer" />
+      <XIcon className="size-4 shrink-0 pointer-events-none text-destructive" aria-hidden />
     </components.ClearIndicator>
   );
 };
@@ -141,14 +153,13 @@ const ReactSelect = ({
   isLoadingMore = false,
   loadingMessage = 'Loading...',
   loadingMoreMessage = 'Loading more...',
+  valueContainerClassName,
 }: ReactSelectProps) => {
-  const animatedComponents = useMemo(() => makeAnimated(), []);
   const controlRef = useRef<HTMLDivElement>(null);
   const [menuPlacement, setMenuPlacement] = useState<'top' | 'bottom'>('bottom');
 
   const selectComponents = useMemo(
     () => ({
-      ...animatedComponents,
       DropdownIndicator,
       ClearIndicator,
       MultiValueRemove,
@@ -156,7 +167,7 @@ const ReactSelect = ({
       LoadingMessage,
       MenuList,
     }),
-    [animatedComponents],
+    [],
   );
 
   const handleMenuOpen = useCallback(() => {
@@ -182,40 +193,51 @@ const ReactSelect = ({
         value={value}
         onChange={onChange}
         closeMenuOnSelect={false}
+        isClearable
         components={selectComponents}
         isMulti
         options={options}
         placeholder={placeholder}
         classNames={{
           container: () => 'cursor-pointer!',
-          control: state =>
+          control: ({ isFocused, hasValue }) =>
             cn(
-              'w-full min-h-12! md:min-h-14! px-2 rounded-2xl bg-primary border text-base! cursor-pointer! transition-[color,box-shadow]',
+              'flex w-full min-h-12! md:min-h-14! px-2 rounded-2xl bg-primary border text-base! cursor-pointer! transition-[color,box-shadow]',
+              hasValue ? 'items-start!' : 'items-center!',
               error
                 ? 'border-destructive focus:border-destructive outline-none'
-                : state.isFocused
+                : isFocused
                   ? 'border-border ring-[1px] ring-primary/50 outline-none'
-                  : 'border-border'
+                  : 'border-border',
             ),
           menuPortal: () => 'z-[200]',
           menu: () =>
             'my-1 rounded-xl border border-border! cursor-pointer! bg-background! text-placeholder! shadow-md overflow-hidden z-[200]',
-          menuList: () => 'p-1 max-h-60 overflow-y-auto',
+          menuList: () => 'p-1 max-h-60 overflow-y-auto show-scrollbar',
           option: state =>
             cn(
               'relative flex w-full cursor-pointer! select-none items-center rounded-xl py-2.5 px-2 text-sm! outline-none transition-colors',
               state.isFocused ? 'bg-primary text-foreground-white' : 'text-placeholder!',
-              state.isSelected ? 'bg-primary text-foreground-white font-medium' : ''
+              state.isSelected ? 'bg-primary text-foreground-white font-medium' : '',
             ),
           multiValue: () =>
             'flex items-center w-fit gap-x-1 rounded-full bg-secondary-light/9 border border-secondary-light/15 px-2 py-1 transition-all',
           multiValueLabel: () => 'text-secondary-light text-sm font-normal!',
           multiValueRemove: () =>
-            'text-destructive hover:text-destructive/80 hover:bg-transparent cursor-pointer rounded-full transition-colors',
+            'flex cursor-pointer items-center justify-center rounded-full p-0.5 text-destructive hover:text-destructive/80',
           placeholder: () => 'text-placeholder/30 text-base! mx-1',
-          input: () => 'text-foreground-white text-sm! ml-1',
-          valueContainer: () => 'flex flex-wrap gap-1 px-1 py-1.5',
-          indicatorsContainer: () => 'px-2 flex items-center gap-1',
+          input: () => 'text-foreground-white text-sm! ml-1 shrink-0',
+          valueContainer: ({ hasValue }) =>
+            cn(
+              'flex min-w-0 flex-1 px-1 justify-start',
+              hasValue
+                ? cn(
+                  'flex-wrap items-start gap-1 py-3 show-scrollbar',
+                  valueContainerClassName ?? 'max-h-28 overflow-y-auto',
+                )
+                : 'items-center py-0',
+            ),
+          indicatorsContainer: () => 'flex shrink-0 items-center self-center gap-1 px-2',
           clearIndicator: () => 'text-destructive hover:text-destructive/80 cursor-pointer',
           noOptionsMessage: () => 'px-3 py-2 text-sm text-placeholder',
         }}
@@ -224,6 +246,26 @@ const ReactSelect = ({
         menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
         styles={{
           menuPortal: base => ({ ...base, zIndex: 200 }),
+          control: (base, state) =>
+            state.hasValue
+              ? {
+                ...base,
+                maxHeight: CHIP_AREA_MAX_HEIGHT_PX + 32,
+                overflow: 'hidden',
+                alignItems: 'flex-start',
+              }
+              : base,
+          valueContainer: (base, state) =>
+            state.hasValue
+              ? {
+                ...base,
+                maxHeight: CHIP_AREA_MAX_HEIGHT_PX,
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                flexWrap: 'wrap',
+                alignContent: 'flex-start',
+              }
+              : base,
         }}
         menuShouldScrollIntoView={false}
         onMenuOpen={handleMenuOpen}
