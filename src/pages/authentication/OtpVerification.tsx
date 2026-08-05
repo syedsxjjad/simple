@@ -1,5 +1,6 @@
 import FormJson from '@/locales/en.json';
 import Button from '@/components/Form/Button';
+import OtpInput from '@/components/Form/OtpInput';
 import SectionHeader from '@/components/SectionHeader';
 import { useOtpVerification } from '@/hooks/useOtpVerification';
 import { Typography } from '@/components/Form/Typography';
@@ -32,9 +33,6 @@ const OtpVerification = () => {
     closeSignupOtpVerifiedModal,
   } = useOtpVerification();
 
-  const inputClassName =
-    'w-full xl:h-[75px] lg:h-14 md:h-12 sm:h-16 h-10 text-center xl:text-3xl lg:text-2xl md:text-2xl text-lg bg-primary font-semibold border border-border focus:ring-2 focus:outline-none focus:ring-secondary-dark focus:bg-secondary-dark/10! focus:text-secondary-dark focus:border-transparent xl:rounded-2xl sm:rounded-xl rounded-lg transition-all duration-200';
-
   const handleLoginModal = () => {
     closeSignupOtpVerifiedModal();
     navigate(PUBLIC_ROUTES.LOGIN);
@@ -53,30 +51,15 @@ const OtpVerification = () => {
             subtitleText={subTitle}
           />
           <form className="space-y-7 mt-12" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex justify-center sm:gap-4 gap-2">
-              {Array.from({ length: OTP_LENGTH }).map((_, index) => {
-                const digit = otpValues?.[index];
-                return (
-                  <input
-                    key={index}
-                    type="text"
-                    name={`otp.${index}`}
-                    value={digit ?? ''}
-                    maxLength={1}
-                    autoComplete={index === 0 ? 'one-time-code' : 'off'}
-                    ref={el => (inputRefs.current[index] = el)}
-                    onChange={e => handleOtpChange(e, index)}
-                    onKeyDown={e => handleOtpKeyDown(e, index)}
-                    onPaste={e => handleOtpPaste(e, index)}
-                    onClick={() => handleOtpClick(index)}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    style={{ ...(!digit ? { backgroundColor: '#161E37' } : {}) }}
-                    className={`${inputClassName} ${digit ? 'border-secondary-dark bg-background! text-secondary-dark' : 'focus:border-secondary-dark'}`}
-                  />
-                );
-              })}
-            </div>
+            <OtpInput
+              length={OTP_LENGTH}
+              values={otpValues}
+              inputRefs={inputRefs}
+              onChange={handleOtpChange}
+              onKeyDown={handleOtpKeyDown}
+              onPaste={handleOtpPaste}
+              onClick={handleOtpClick}
+            />
             <div>
               {errors.otp && (
                 <p className="text-sm -mt-4 text-destructive">
